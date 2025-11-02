@@ -1,4 +1,5 @@
 /* google font inter  */
+
 @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 
 @import "tailwindcss";
@@ -41,7 +42,6 @@
 * {
   font-family: "Inter", sans-serif;
 }
-
 .gradient-primary {
   background: linear-gradient(to right, #632ee3, #9f62f2);
 }

@@ -1,21 +1,23 @@
 import React from "react";
 import Container from "../../Components/Container";
 import { FaGoogle } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Register = () => {
   return (
-    <main className="flex-1 flex justify-center items-center bg-base-200 px-4 h-full">
+    <main className="flex justify-center items-center min-h-screen bg-base-200 px-4 py-8">
       <Container>
         <div className="card bg-base-100 w-full max-w-md shadow-xl mx-auto">
           <div className="card-body p-6">
-            <h2 className="text-xl font-bold text-center mb-4 text-primary">
+            <h2 className="text-2xl font-bold text-center mb-4 text-primary">
               Create an Account
             </h2>
 
             <form>
-              <fieldset className="space-y-3">
+              <fieldset className="space-y-4">
+                {/* Full Name */}
                 <div>
-                  <label className="label text-sm">Full Name</label>
+                  <label className="label text-sm font-medium">Full Name</label>
                   <input
                     type="text"
                     name="name"
@@ -26,7 +28,7 @@ const Register = () => {
                 </div>
 
                 <div>
-                  <label className="label text-sm">Email</label>
+                  <label className="label text-sm font-medium">Email</label>
                   <input
                     type="email"
                     name="email"
@@ -37,7 +39,7 @@ const Register = () => {
                 </div>
 
                 <div>
-                  <label className="label text-sm">Password</label>
+                  <label className="label text-sm font-medium">Password</label>
                   <input
                     type="password"
                     name="password"
@@ -55,18 +57,27 @@ const Register = () => {
               </fieldset>
             </form>
 
-            <div className="divider text-xs my-3">OR</div>
-            {/* Google Button */}
+            <div className="divider text-xs my-4">OR</div>
+
             <button className="btn bg-white text-black border border-gray-300 w-full gap-2 hover:bg-gray-50 text-sm">
               <FaGoogle className="text-red-500" />
               Sign up with Google
             </button>
-            {/* Login Link */}
-            <p className="text-center text-xs mt-3">
+
+            <p className="text-center text-xs mt-4">
               Already have an account?{" "}
-              <a href="/login" className="link link-hover text-primary">
+              <Link
+                to={"/account/login"}
+                className="link link-hover text-primary">
                 Login here
-              </a>
+              </Link>
+            </p>
+
+            {/* ===== Home Link ===== */}
+            <p className="text-center text-xs mt-2">
+              <Link to="/" className="link link-hover text-secondary">
+                Back to Home
+              </Link>
             </p>
           </div>
         </div>

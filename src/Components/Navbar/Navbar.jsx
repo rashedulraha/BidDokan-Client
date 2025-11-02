@@ -20,12 +20,12 @@ const Navbar = () => {
   const UserAction = (
     <>
       <Link
-        to="/login"
+        to="/account/login"
         className="btn btn-outline btn-primary btn-sm md:btn-md rounded-full px-6 border-2 hover:bg-primary hover:text-white transition-all">
         Login
       </Link>
       <Link
-        to="/register"
+        to="/account/register"
         className="btn btn-primary btn-sm md:btn-md rounded-full hidden md:flex ">
         Register
       </Link>

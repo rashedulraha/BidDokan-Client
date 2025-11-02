@@ -5,6 +5,8 @@ import MyProduct from "../Pages/MyProducts/MyProduct";
 import MyBids from "../Pages/MyBids/MyBids";
 import CreateProducts from "../Pages/CreateProducts/CreateProducts";
 import Home from "../Pages/Home/Home";
+
+import Account from "../Layouts/Account/Account";
 import Login from "../Pages/Login/Login";
 import Register from "../Pages/Register/Register";
 import ForgotPassword from "../Pages/Forgot/ForgotPassword";
@@ -34,16 +36,22 @@ const router = createBrowserRouter([
         path: "create-products",
         Component: CreateProducts,
       },
+    ],
+  },
+  {
+    path: "/account",
+    Component: Account,
+    children: [
       {
-        path: "/login",
+        path: "/account/login",
         Component: Login,
       },
       {
-        path: "/register",
+        path: "/account/register",
         Component: Register,
       },
       {
-        path: "/forgot-password",
+        path: "/account/forgot-password",
         Component: ForgotPassword,
       },
     ],
