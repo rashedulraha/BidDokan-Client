@@ -41,7 +41,11 @@ const router = createBrowserRouter([
       },
       {
         path: "create-products",
-        Component: CreateProducts,
+        element: (
+          <PrivetRoute>
+            <CreateProducts />
+          </PrivetRoute>
+        ),
       },
       {
         path: "/profile-page",

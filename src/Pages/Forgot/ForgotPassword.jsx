@@ -1,8 +1,26 @@
-import React from "react";
+import React, { useContext } from "react";
 import Container from "../../Components/Container";
 import { Link } from "react-router";
+import AuthContext from "../../Context/AuthContext/AuthContext";
+import { toast } from "react-toastify";
 
 const ForgotPassword = () => {
+  const { ResetPassword } = useContext(AuthContext);
+
+  const handleResetPassword = (e) => {
+    e.preventDefault();
+    const email = e.target.email.value;
+    console.log(email);
+
+    ResetPassword(email)
+      .then(() => {
+        toast.success("Check your email to reset your password");
+      })
+      .catch((error) => {
+        toast.error(error.massage);
+      });
+  };
+
   return (
     <main className="flex justify-center items-center min-h-screen bg-base-200 px-4">
       <Container>
@@ -16,7 +34,7 @@ const ForgotPassword = () => {
               your password.
             </p>
 
-            <form>
+            <form onSubmit={handleResetPassword}>
               <fieldset className="space-y-3">
                 {/* Email Field */}
                 <div>

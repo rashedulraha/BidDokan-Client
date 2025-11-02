@@ -3,9 +3,10 @@ import Container from "../../Components/Container";
 import { FaGoogle } from "react-icons/fa";
 import { Link } from "react-router";
 import AuthContext from "../../Context/AuthContext/AuthContext";
+import { toast } from "react-toastify";
 
 const Login = () => {
-  const { LoginUser } = useContext(AuthContext);
+  const { LoginUser, signInWithGoogle } = useContext(AuthContext);
 
   const handleLogin = (e) => {
     e.preventDefault;
@@ -21,8 +22,18 @@ const Login = () => {
       });
   };
 
+  const handleGoogleLogin = () => {
+    signInWithGoogle()
+      .then(() => {
+        toast.success("successfully Login");
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
+  };
+
   return (
-    <main className="flex justify-center items-center min-h-screen bg-base-200 px-4">
+    <main className="flex py-10 lg:py-0 justify-center items-center min-h-screen bg-base-200 px-4">
       <Container>
         <div className="card bg-base-100 w-full max-w-md shadow-xl mx-auto">
           <div className="card-body p-6">
@@ -80,7 +91,9 @@ const Login = () => {
 
             <div className="divider text-xs my-4">OR</div>
 
-            <button className="btn bg-white text-black border border-gray-300 w-full gap-2 hover:bg-gray-50 text-sm">
+            <button
+              onClick={handleGoogleLogin}
+              className="btn bg-white text-black border border-gray-300 w-full gap-2 hover:bg-gray-50 text-sm">
               <FaGoogle className="text-red-500" />
               Continue with Google
             </button>
@@ -94,7 +107,6 @@ const Login = () => {
               </Link>
             </p>
 
-            {/* ===== Home Link ===== */}
             <p className="text-center text-xs mt-2">
               <Link to="/" className="link link-hover text-secondary">
                 Back to Home

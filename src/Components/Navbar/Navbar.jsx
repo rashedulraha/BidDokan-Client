@@ -8,6 +8,11 @@ import AuthContext from "../../Context/AuthContext/AuthContext";
 const Navbar = () => {
   const { user } = useContext(AuthContext);
 
+  // const displayName = user.displayName || `Guest`;
+  const photoURL =
+    user?.photoURL ||
+    `https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQf1fiSQO7JfDw0uv1Ae_Ye-Bo9nhGNg27dwg&s`;
+
   const MenuLink = (
     <>
       <div className="flex flex-col lg:flex-row items-center gap-4 md:gap-6 lg:gap-8 font-medium text-gray-700 text-base md:text-sm lg:text-base">
@@ -31,7 +36,7 @@ const Navbar = () => {
         to="/profile-page"
         className="rounded-full border hover:bg-primary hover:text-white transition-all">
         <img
-          src="https://randomuser.me/api/portraits/men/1.jpg"
+          src={photoURL}
           alt="Profile"
           className="w-12 h-12 rounded-full border-4 border-white"
         />

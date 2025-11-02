@@ -6,7 +6,7 @@ import AuthContext from "../../Context/AuthContext/AuthContext";
 import { toast } from "react-toastify";
 
 const Register = () => {
-  const { register } = useContext(AuthContext);
+  const { register, signInWithGoogle } = useContext(AuthContext);
 
   // !Register function
   const handleRegister = (e) => {
@@ -24,6 +24,17 @@ const Register = () => {
         toast.error(error.message);
       });
   };
+
+  const handleGoogleRegister = () => {
+    signInWithGoogle()
+      .then(() => {
+        toast.success("successfully Login");
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
+  };
+
   return (
     <main className="flex justify-center items-center min-h-screen bg-base-200 px-4 py-8">
       <Container>
@@ -79,7 +90,9 @@ const Register = () => {
 
             <div className="divider text-xs my-4">OR</div>
 
-            <button className="btn bg-white text-black border border-gray-300 w-full gap-2 hover:bg-gray-50 text-sm">
+            <button
+              onClick={handleGoogleRegister}
+              className="btn bg-white text-black border border-gray-300 w-full gap-2 hover:bg-gray-50 text-sm">
               <FaGoogle className="text-red-500" />
               Sign up with Google
             </button>
