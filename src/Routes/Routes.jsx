@@ -7,6 +7,7 @@ import CreateProducts from "../Pages/CreateProducts/CreateProducts";
 import Home from "../Pages/Home/Home";
 import Login from "../Pages/Login/Login";
 import Register from "../Pages/Register/Register";
+import ForgotPassword from "../Pages/Forgot/ForgotPassword";
 
 const router = createBrowserRouter([
   {
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
       {
         path: "/register",
         Component: Register,
+      },
+      {
+        path: "/forgot-password",
+        Component: ForgotPassword,
       },
     ],
   },
