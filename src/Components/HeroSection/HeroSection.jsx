@@ -1,6 +1,7 @@
 import React from "react";
 import Container from "../../Components/Container";
 import { IoSearchOutline } from "react-icons/io5";
+import { Link } from "react-router";
 
 const HeroSection = () => {
   return (
@@ -33,14 +34,14 @@ const HeroSection = () => {
             </div>
 
             <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
-              <a href="/products" className="btn btn-primary px-6">
+              <Link to={"/all-products"} className="btn btn-primary px-6">
                 Watch All Products
-              </a>
-              <a
-                href="/post-product"
+              </Link>
+              <Link
+                to={"/create-products"}
                 className="btn btn-outline btn-primary px-6">
-                Post a Product
-              </a>
+                Create a Product
+              </Link>
             </div>
           </div>
         </Container>

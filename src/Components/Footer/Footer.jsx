@@ -12,7 +12,7 @@ import Container from "../Container";
 
 const Footer = () => {
   return (
-    <footer className="bg-blue-900 text-white py-10 px-4">
+    <footer className="bg-[#001931] text-white py-10 px-4">
       <Container>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Brand Section */}

@@ -1,23 +1,43 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, NavLink } from "react-router";
 import { TbLayoutNavbarExpand } from "react-icons/tb";
 import Container from "../Container";
 import "../../index.css";
+import AuthContext from "../../Context/AuthContext/AuthContext";
 
 const Navbar = () => {
+  const { user } = useContext(AuthContext);
+
   const MenuLink = (
     <>
-      <div className="flex flex-col gap-3 md:flex-row md:gap-6 lg:gap-8 font-medium text-base text-gray-600">
+      <div className="flex flex-col lg:flex-row items-center gap-4 md:gap-6 lg:gap-8 font-medium text-gray-700 text-base md:text-sm lg:text-base">
         <NavLink to={"/"}>Home</NavLink>
         <NavLink to={"/all-products"}>AllProducts</NavLink>
-        <NavLink to={"/my-products"}>My Products</NavLink>
         <NavLink to={"/my-bids"}>My Bids</NavLink>
-        <NavLink to={"/create-products"}>Crate products</NavLink>
+
+        {user && (
+          <>
+            <NavLink to={"/create-products"}>Crate product</NavLink>
+            <NavLink to={"/my-products"}>My Products</NavLink>
+          </>
+        )}
       </div>
     </>
   );
 
-  const UserAction = (
+  const UserAction = user ? (
+    <>
+      <Link
+        to="/profile-page"
+        className="rounded-full border hover:bg-primary hover:text-white transition-all">
+        <img
+          src="https://randomuser.me/api/portraits/men/1.jpg"
+          alt="Profile"
+          className="w-12 h-12 rounded-full border-4 border-white"
+        />
+      </Link>
+    </>
+  ) : (
     <>
       <Link
         to="/account/login"
@@ -31,6 +51,7 @@ const Navbar = () => {
       </Link>
     </>
   );
+
   return (
     <div className="bg-base-100/95 backdrop-blur-sm sticky top-0 z-50 shadow-md border-b border-base-300">
       <Container>
@@ -50,12 +71,12 @@ const Navbar = () => {
               </ul>
             </div>
 
-            <Link to="/" className="text-xl font-bold normal-case">
+            <a href="/" className="text-xl font-bold normal-case">
               <span className="text-primary">Bid</span>
               <span className="bg-gradient-to-r from-[#632ee3] to-[#9f62f2] bg-clip-text text-transparent">
                 Dokan
               </span>
-            </Link>
+            </a>
           </div>
 
           <div className="navbar-center hidden lg:flex">

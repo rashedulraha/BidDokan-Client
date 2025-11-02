@@ -1,9 +1,29 @@
-import React from "react";
+import React, { useContext } from "react";
 import Container from "../../Components/Container";
 import { FaGoogle } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import AuthContext from "../../Context/AuthContext/AuthContext";
+import { toast } from "react-toastify";
 
 const Register = () => {
+  const { register } = useContext(AuthContext);
+
+  // !Register function
+  const handleRegister = (e) => {
+    e.preventDefault();
+
+    // const name = e.target.name.value;
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+
+    register(email, password)
+      .then(() => {
+        toast.success("Successfully Register");
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
+  };
   return (
     <main className="flex justify-center items-center min-h-screen bg-base-200 px-4 py-8">
       <Container>
@@ -13,7 +33,7 @@ const Register = () => {
               Create an Account
             </h2>
 
-            <form>
+            <form onSubmit={handleRegister}>
               <fieldset className="space-y-4">
                 {/* Full Name */}
                 <div>

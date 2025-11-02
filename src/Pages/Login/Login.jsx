@@ -1,9 +1,26 @@
-import React from "react";
+import React, { useContext } from "react";
 import Container from "../../Components/Container";
 import { FaGoogle } from "react-icons/fa";
 import { Link } from "react-router";
+import AuthContext from "../../Context/AuthContext/AuthContext";
 
 const Login = () => {
+  const { LoginUser } = useContext(AuthContext);
+
+  const handleLogin = (e) => {
+    e.preventDefault;
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+
+    LoginUser(email, password)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
+
   return (
     <main className="flex justify-center items-center min-h-screen bg-base-200 px-4">
       <Container>
@@ -13,7 +30,7 @@ const Login = () => {
               Welcome Back
             </h2>
 
-            <form>
+            <form onSubmit={handleLogin}>
               <fieldset className="space-y-3">
                 <div>
                   <label className="label text-sm font-medium">Email</label>

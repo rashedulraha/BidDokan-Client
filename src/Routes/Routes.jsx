@@ -10,6 +10,8 @@ import Account from "../Layouts/Account/Account";
 import Login from "../Pages/Login/Login";
 import Register from "../Pages/Register/Register";
 import ForgotPassword from "../Pages/Forgot/ForgotPassword";
+import ProfilePage from "../Pages/ProfilePage/ProfilePage";
+import PrivetRoute from "../PrivetRoute/PrivetRoute";
 
 const router = createBrowserRouter([
   {
@@ -22,19 +24,36 @@ const router = createBrowserRouter([
       },
       {
         path: "/all-products",
-        Component: AllProducts,
+        element: (
+          <PrivetRoute>
+            <AllProducts />
+          </PrivetRoute>
+        ),
       },
-      {
-        path: "my-products",
-        Component: MyProduct,
-      },
+
       {
         path: "my-bids",
-        Component: MyBids,
+        element: (
+          <PrivetRoute>
+            <MyBids />
+          </PrivetRoute>
+        ),
       },
       {
         path: "create-products",
         Component: CreateProducts,
+      },
+      {
+        path: "/profile-page",
+        element: (
+          <PrivetRoute>
+            <ProfilePage />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "my-products",
+        Component: MyProduct,
       },
     ],
   },
