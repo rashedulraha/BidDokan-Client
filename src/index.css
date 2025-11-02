@@ -4,6 +4,52 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
+@plugin "daisyui/theme" {
+  name: "smartdeals";
+  default: true;
+
+  --color-primary: #632ee3;
+  --color-primary2: #9f62f2;
+  --color-primary-content: #ffffff;
+
+  --color-secondary: #ec4899;
+  --color-secondary-content: #ffffff;
+
+  --color-accent: #06b6d4;
+  --color-accent-content: #ffffff;
+
+  --color-neutral: #1f2937;
+  --color-neutral-content: #e5e7eb;
+
+  --color-base-100: #f8fafc;
+  --color-base-200: #e2e8f0;
+  --color-base-300: #cbd5e1;
+  --color-base-content: #1e293b;
+
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+
+  /* Font Family */
+  --font-sans: "'Poppins', 'Inter', system-ui, sans-serif";
+}
+
+.active {
+  @apply text-primary;
+}
+
 * {
   font-family: "Inter", sans-serif;
+}
+
+.gradient-primary {
+  background: linear-gradient(to right, #632ee3, #9f62f2);
+}
+
+.gradient-primary-hover:hover {
+  background: linear-gradient(to right, #9f62f2, #632ee3);
+}
+
+.gradient-primary-soft {
+  background: linear-gradient(135deg, #632ee3 0%, #9f62f2 100%);
 }
