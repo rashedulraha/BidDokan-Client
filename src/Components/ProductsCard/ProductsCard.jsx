@@ -1,8 +1,10 @@
 import React from "react";
+import { Link } from "react-router";
 
 const ProductsCard = ({ latestProducts }) => {
-  const { category, price_max, price_min, description, title, image } =
+  const { _id, price_max, price_min, description, title, image } =
     latestProducts;
+
   return (
     <div className="card  w-full shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100">
       <figure className="p-4">
@@ -19,9 +21,11 @@ const ProductsCard = ({ latestProducts }) => {
           $ {price_max}- {price_min}
         </p>
         <div className="card-actions mt-4 w-full">
-          <button className="btn w-full gradient-primary  text-white capitalize">
+          <Link
+            to={`/product-details/${_id}`}
+            className="btn w-full gradient-primary  text-white capitalize">
             View details
-          </button>
+          </Link>
         </div>
       </div>
     </div>

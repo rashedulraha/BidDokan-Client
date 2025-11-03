@@ -19,10 +19,7 @@ const router = createBrowserRouter([
     path: "/",
     Component: Layouts,
     children: [
-      {
-        path: "/",
-        Component: Home,
-      },
+      { path: "/", Component: Home },
       {
         path: "/all-products",
         element: (
@@ -56,14 +53,8 @@ const router = createBrowserRouter([
           </PrivetRoute>
         ),
       },
-      {
-        path: "my-products",
-        Component: MyProduct,
-      },
-      {
-        path: "product-details",
-        Component: ProductsDetails,
-      },
+      { path: "my-products", Component: MyProduct },
+      { path: "product-details/:id", Component: ProductsDetails },
     ],
   },
   {

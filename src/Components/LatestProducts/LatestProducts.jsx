@@ -4,7 +4,6 @@ import Container from "../Container";
 
 const LatestProducts = ({ latestProductsPromise }) => {
   const promiseLatestProducts = use(latestProductsPromise);
-  console.log(promiseLatestProducts);
 
   return (
     <Container>
