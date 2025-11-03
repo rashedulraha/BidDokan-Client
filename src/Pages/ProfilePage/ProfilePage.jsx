@@ -11,7 +11,7 @@ const ProfilePage = () => {
   // const email = user?.email || "user@gmail.com";
   const photoURL =
     user?.photoURL ||
-    `https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQf1fiSQO7JfDw0uv1Ae_Ye-Bo9nhGNg27dwg&s`;
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQf1fiSQO7JfDw0uv1Ae_Ye-Bo9nhGNg27dwg&s";
 
   const handleSignout = () => {
     Signout().then(() => {
@@ -40,13 +40,13 @@ const ProfilePage = () => {
           {/* Action Buttons Row */}
           <div className="flex justify-center p-4 bg-gray-100">
             <div className="flex space-x-4">
-              <button className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
+              <button className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors cursor-pointer">
                 <FaEdit className="mr-2" />
                 Edit Profile
               </button>
               <button
                 onClick={handleSignout}
-                className="flex items-center px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors">
+                className="flex items-center px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors cursor-pointer">
                 <FaSignOutAlt className="mr-2" />
                 Logout
               </button>

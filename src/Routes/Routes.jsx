@@ -12,6 +12,7 @@ import Register from "../Pages/Register/Register";
 import ForgotPassword from "../Pages/Forgot/ForgotPassword";
 import ProfilePage from "../Pages/ProfilePage/ProfilePage";
 import PrivetRoute from "../PrivetRoute/PrivetRoute";
+import ProductsDetails from "../Pages/ProductDetails/ProductsDetails";
 
 const router = createBrowserRouter([
   {
@@ -58,6 +59,10 @@ const router = createBrowserRouter([
       {
         path: "my-products",
         Component: MyProduct,
+      },
+      {
+        path: "product-details",
+        Component: ProductsDetails,
       },
     ],
   },
