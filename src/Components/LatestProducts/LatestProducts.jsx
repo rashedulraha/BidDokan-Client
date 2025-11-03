@@ -8,10 +8,8 @@ const LatestProducts = ({ latestProductsPromise }) => {
   return (
     <Container>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        {promiseLatestProducts.map((latestProducts) => (
-          <ProductsCard
-            key={latestProducts._id}
-            latestProducts={latestProducts}></ProductsCard>
+        {promiseLatestProducts.map((Product) => (
+          <ProductsCard key={Product?._id} Product={Product}></ProductsCard>
         ))}
       </div>
     </Container>

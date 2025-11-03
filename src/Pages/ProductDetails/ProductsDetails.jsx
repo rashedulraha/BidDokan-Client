@@ -10,7 +10,7 @@ import { useParams } from "react-router";
 import useSingleProduct from "../../Hooks/useSingleProduct";
 const ProductDetails = () => {
   const { id } = useParams();
-  const { product } = useSingleProduct(id);
+  const { product } = useSingleProduct(`http://localhost:3000/products/${id}`);
 
   const {
     title,

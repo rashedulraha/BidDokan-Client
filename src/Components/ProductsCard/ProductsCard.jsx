@@ -1,9 +1,8 @@
 import React from "react";
 import { Link } from "react-router";
 
-const ProductsCard = ({ latestProducts }) => {
-  const { _id, price_max, price_min, description, title, image } =
-    latestProducts;
+const ProductsCard = ({ Product }) => {
+  const { _id, price_max, price_min, description, title, image } = Product;
 
   return (
     <div className="card  w-full shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100">
