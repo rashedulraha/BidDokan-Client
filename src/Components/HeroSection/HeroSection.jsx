@@ -6,7 +6,9 @@ import { Link } from "react-router";
 const HeroSection = () => {
   return (
     <div className="flex flex-col">
-      <section className="flex-1 flex items-center justify-center bg-gradient-to-br from-base-200 via-base-100 to-base-200 px-4 py-8 md:py-12">
+      <section
+        className="flex-1 flex items-center justify-center bg-gradient-to-br from-[#FFE6FD] via-[#F3E9FF] to-[#E0F8F5]
+ px-4 py-8 md:py-12">
         <Container>
           <div className="text-center max-w-4xl mx-auto">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
