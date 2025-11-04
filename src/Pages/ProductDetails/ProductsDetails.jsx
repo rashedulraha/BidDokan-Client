@@ -6,8 +6,12 @@ import { IoInformationCircleSharp } from "react-icons/io5";
 import { IoPersonSharp } from "react-icons/io5";
 import { IoMdCall } from "react-icons/io";
 import AuthContext from "../../Context/AuthContext/AuthContext";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import useSingleProduct from "../../Hooks/useSingleProduct";
+
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; // <-- IMPORTANT
+
 const ProductDetails = () => {
   const { id } = useParams();
   const { product } = useSingleProduct(`http://localhost:3000/products/${id}`);
@@ -38,17 +42,78 @@ const ProductDetails = () => {
 
   const handleBidSubmit = (e) => {
     e.preventDefault();
-    const name = e.target.name.value;
-    const email = e.target.email.value;
-    const photoURL = e.target.photoURL.value;
-    const contactInfo = e.target.contactInfo.value;
-    const inputPrice = e.target.inputPrice.value;
-    console.log(name, email, photoURL, contactInfo, inputPrice);
+
+    const form = e.target;
+    const name = form.name.value.trim();
+    const email = form.email.value.trim();
+    const photoURL = form.photoURL.value.trim();
+    const contactInfo = form.contactInfo.value.trim();
+    const inputPrice = form.inputPrice.value.trim();
+
+    // === FULL VALIDATION ===
+    if (!inputPrice) {
+      toast.error("Please enter your offered price!");
+      return;
+    }
+    if (!contactInfo) {
+      toast.error("Contact number is required!");
+      return;
+    }
+
+    if (isNaN(contactInfo) || contactInfo.length < 10) {
+      toast.error("Enter a valid 10-digit contact number!");
+      return;
+    }
+    if (isNaN(inputPrice) || Number(inputPrice) <= 0) {
+      toast.error("Price must be a positive number!");
+      return;
+    }
+
+    const newBid = {
+      name,
+      email,
+      photoURL,
+      contactInfo,
+      inputPrice: Number(inputPrice),
+      status: "pending",
+      productId: id,
+    };
+
+    fetch(`http://localhost:3000/bids`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newBid),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.insertedId) {
+          bidModalRef.current.close();
+          toast.success("Bid placed successfully!");
+          form.reset();
+        } else {
+          toast.error("Failed to place bid. Try again.");
+        }
+      })
+      .catch(() => {
+        toast.error("Network error. Please try again.");
+      });
   };
 
   return (
     <>
-      <div className="  py-8 px-4 sm:px-6 lg:px-8">
+      {/* Toast Container - MUST be in the component tree */}
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        closeOnClick
+        pauseOnHover
+        theme="colored"
+      />
+
+      <div className="py-8 px-4 sm:px-6 lg:px-8">
         <Container>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 p-6 md:p-8">
             {/* Left Column - Product Image */}
@@ -60,14 +125,11 @@ const ProductDetails = () => {
                   className="w-full h-full object-cover"
                 />
               </div>
-
-              {/* Status Badge */}
               <div className="flex justify-center">{description}</div>
             </div>
 
             {/* Right Column - Product Details */}
             <div className="space-y-6">
-              {/* Title and Category */}
               <div>
                 <h1 className="text-3xl font-bold text-gray-900 mb-2">
                   {title}
@@ -82,7 +144,6 @@ const ProductDetails = () => {
                 </div>
               </div>
 
-              {/* Price Section */}
               <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-5 border border-blue-100">
                 <p className="text-sm text-gray-600 mb-1">Price starts from</p>
                 <div className="flex items-baseline">
@@ -96,7 +157,6 @@ const ProductDetails = () => {
                 </div>
               </div>
 
-              {/* Product Details Card */}
               <div className="bg-gray-50 rounded-xl p-5 border border-gray-200">
                 <h3 className="text-lg font-semibold text-gray-900 mb-3 flex gap-2 items-center">
                   <IoInformationCircleSharp />
@@ -106,11 +166,12 @@ const ProductDetails = () => {
                   <div className="flex">
                     <span className="text-gray-600 w-32">Posted:</span>
                     <span className="font-medium text-gray-900">
-                      {new Date(created_at).toLocaleDateString("en-US", {
-                        year: "numeric",
-                        month: "short",
-                        day: "numeric",
-                      })}
+                      {created_at &&
+                        new Date(created_at).toLocaleDateString("en-US", {
+                          year: "numeric",
+                          month: "short",
+                          day: "numeric",
+                        })}
                     </span>
                   </div>
                   <div className="flex">
@@ -126,7 +187,6 @@ const ProductDetails = () => {
                 </div>
               </div>
 
-              {/* Seller Information Card */}
               <div className="bg-gray-50 rounded-xl p-5 border border-gray-200">
                 <h3 className="text-lg font-semibold text-gray-900 mb-3 flex items-center gap-2">
                   <IoPersonSharp />
@@ -147,9 +207,7 @@ const ProductDetails = () => {
                         <MdOutlineEmail />
                         {email}
                       </div>
-                      <div
-                        className="flex gap-2
-                     items-center text-gray-600">
+                      <div className="flex gap-2 items-center text-gray-600">
                         <FaLocationDot /> {location}
                       </div>
                       <div className="flex gap-2 items-center text-gray-600">
@@ -161,7 +219,6 @@ const ProductDetails = () => {
                 </div>
               </div>
 
-              {/* Product Description */}
               <div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">
                   Product Description
@@ -171,33 +228,31 @@ const ProductDetails = () => {
                 </p>
               </div>
 
-              {/* Action Button */}
               <button
                 onClick={handleBidModalOpen}
-                className=" w-full py-4 px-6 bg-gradient-to-r from-blue-600 to-purple-700 text-white font-bold rounded-xl transition-all duration-300 transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 cursor-pointer">
-                I Want Buy This Product
+                className="w-full py-4 px-6 bg-gradient-to-r from-blue-600 to-purple-700 text-white font-bold rounded-xl transition-all duration-300 transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 cursor-pointer">
+                I Want to Buy This Product
               </button>
             </div>
           </div>
         </Container>
       </div>
 
+      {/* Bid Modal */}
       <dialog ref={bidModalRef} className="modal modal-bottom sm:modal-middle">
         <div className="modal-box p-6 max-w-md w-full">
           <h3 className="font-bold text-xl text-center mb-6">
             Give Seller Your Offered Price
           </h3>
-          {/* cancel button */}
+
+          {/* Close button */}
           <form method="dialog">
-            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 hover:bg-indigo-500 hover:text-white">
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 hover:bg-red-500 hover:text-white">
               ✕
             </button>
           </form>
 
-          <form
-            method="dialog"
-            className="space-y-4"
-            onSubmit={handleBidSubmit}>
+          <form className="space-y-4" onSubmit={handleBidSubmit}>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium mb-1">
@@ -205,10 +260,10 @@ const ProductDetails = () => {
                 </label>
                 <input
                   type="text"
-                  readOnly
-                  defaultValue={user?.displayName}
                   name="name"
-                  className="input input-bordered w-full"
+                  readOnly
+                  defaultValue={user?.displayName || ""}
+                  className="input input-bordered w-full bg-gray-50"
                 />
               </div>
               <div>
@@ -219,13 +274,12 @@ const ProductDetails = () => {
                   type="email"
                   name="email"
                   readOnly
-                  defaultValue={user?.email}
-                  className="input input-bordered w-full"
+                  defaultValue={user?.email || ""}
+                  className="input input-bordered w-full bg-gray-50"
                 />
               </div>
             </div>
 
-            {/* Buyer Image URL */}
             <div>
               <label className="block text-sm font-medium mb-1">
                 Buyer Image URL
@@ -234,40 +288,41 @@ const ProductDetails = () => {
                 type="url"
                 name="photoURL"
                 readOnly
-                defaultValue={user?.photoURL}
-                className="input input-bordered w-full"
+                defaultValue={user?.photoURL || ""}
+                className="input input-bordered w-full bg-gray-50"
               />
             </div>
 
-            {/* Place your Price */}
             <div>
               <label className="block text-sm font-medium mb-1">
-                Place your Price
+                Place your Price <span className="text-red-500">*</span>
               </label>
               <input
-                type="text"
+                type="number"
                 name="inputPrice"
-                placeholder="Place your bid Price"
+                placeholder="1500"
                 className="input input-bordered w-full"
+                min="1"
               />
             </div>
 
-            {/* Contact Info */}
             <div>
               <label className="block text-sm font-medium mb-1">
-                Contact Info
+                Contact Number <span className="text-red-500">*</span>
               </label>
               <input
                 type="tel"
                 name="contactInfo"
-                placeholder="Please enter your contact number"
+                placeholder="10-digit phone number"
                 className="input input-bordered w-full"
+                pattern="[0-9]{10}"
               />
             </div>
 
-            {/* Action Buttons */}
             <div className="modal-action mt-6 flex justify-end gap-3">
-              <button type="submit" className="btn bg-indigo-500 text-white ">
+              <button
+                type="submit"
+                className="btn bg-indigo-600 hover:bg-indigo-700 text-white">
                 Submit Bid
               </button>
             </div>
