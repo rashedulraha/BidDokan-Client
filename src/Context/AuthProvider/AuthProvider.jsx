@@ -16,11 +16,11 @@ const GoogleProvider = new GoogleAuthProvider();
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [loading, satLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   //! Register
   const register = async (email, password) => {
-    satLoading(true);
+    setLoading(true);
     try {
       const userInformation = await createUserWithEmailAndPassword(
         auth,
@@ -34,7 +34,7 @@ const AuthProvider = ({ children }) => {
     } catch (error) {
       console.error("Registration Error:", error.message);
     } finally {
-      satLoading(false);
+      setLoading(false);
     }
   };
 
@@ -65,9 +65,10 @@ const AuthProvider = ({ children }) => {
 
   //! Observer and get user data
   useEffect(() => {
+    setLoading(true);
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      satLoading(false);
+      setLoading(false);
     });
 
     return () => unSubscribe();

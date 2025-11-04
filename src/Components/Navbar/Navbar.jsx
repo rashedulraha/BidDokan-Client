@@ -4,9 +4,10 @@ import { TbLayoutNavbarExpand } from "react-icons/tb";
 import Container from "../Container";
 import "../../index.css";
 import AuthContext from "../../Context/AuthContext/AuthContext";
+import { BarLoader } from "react-spinners";
 
 const Navbar = () => {
-  const { user } = useContext(AuthContext);
+  const { user, loading } = useContext(AuthContext);
 
   // const displayName = user.displayName || `Guest`;
   const photoURL =
@@ -56,6 +57,14 @@ const Navbar = () => {
       </Link>
     </>
   );
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center  h-screen z-50 absolute top-0 inset-0 bg-white">
+        <BarLoader color="#422ad5" />
+      </div>
+    );
+  }
 
   return (
     <div className="bg-base-100/95 backdrop-blur-sm sticky top-0 z-50 shadow-md border-b border-base-300">
