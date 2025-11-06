@@ -40,6 +40,7 @@ const AuthProvider = ({ children }) => {
 
   //! Login user
   const LoginUser = async (email, password) => {
+    setLoading(true);
     try {
       const loginUser = await signInWithEmailAndPassword(auth, email, password);
       return loginUser;
@@ -68,7 +69,9 @@ const AuthProvider = ({ children }) => {
     setLoading(true);
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      setLoading(false);
+      setTimeout(() => {
+        setLoading(false);
+      }, 1500);
     });
 
     return () => unSubscribe();

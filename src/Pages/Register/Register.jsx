@@ -1,12 +1,15 @@
 import React, { useContext } from "react";
 import Container from "../../Components/Container";
 import { FaGoogle } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AuthContext from "../../Context/AuthContext/AuthContext";
 import { toast } from "react-toastify";
+import { BarLoader } from "react-spinners";
 
 const Register = () => {
-  const { register, signInWithGoogle } = useContext(AuthContext);
+  const { register, signInWithGoogle, loading } = useContext(AuthContext);
+
+  const navigate = useNavigate(null);
 
   // !Register function
   const handleRegister = (e) => {
@@ -19,12 +22,14 @@ const Register = () => {
     register(email, password)
       .then(() => {
         toast.success("Successfully Register");
+        navigate("/");
       })
       .catch((error) => {
         toast.error(error.message);
       });
   };
 
+  //  with google login provider
   const handleGoogleRegister = () => {
     signInWithGoogle()
       .then(() => {
@@ -34,6 +39,14 @@ const Register = () => {
         toast.error(error.message);
       });
   };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center  h-screen z-50 absolute top-0 inset-0 bg-white">
+        <BarLoader color="#422ad5" />
+      </div>
+    );
+  }
 
   return (
     <main className="flex justify-center items-center min-h-screen bg-base-200 px-4 py-8">
