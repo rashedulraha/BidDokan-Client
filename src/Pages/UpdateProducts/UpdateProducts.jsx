@@ -1,9 +1,8 @@
 import React from "react";
 // import useSingleProduct from "../../Hooks/useSingleProduct";
-import { Link, useParams } from "react-router";
+import { useParams } from "react-router";
 import useSingleProduct from "../../Hooks/useSingleProduct";
 import Container from "../../Components/Container";
-import { FaArrowLeftLong } from "react-icons/fa6";
 
 const UpdateProducts = () => {
   const { _id } = useParams();
