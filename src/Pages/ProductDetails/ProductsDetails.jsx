@@ -8,30 +8,28 @@ import { IoMdCall } from "react-icons/io";
 import AuthContext from "../../Context/AuthContext/AuthContext";
 import { useParams } from "react-router-dom";
 import useSingleProduct from "../../Hooks/useSingleProduct";
-
 import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css"; // <-- IMPORTANT
+import "react-toastify/dist/ReactToastify.css";
+import { Link } from "react-router";
 
 const ProductDetails = () => {
   const { id } = useParams();
   const { product } = useSingleProduct(`http://localhost:3000/products/${id}`);
 
-  const {
-    title,
-    image,
-    category,
-    price_min,
-    price_max,
-    created_at,
-    condition,
-    seller_image,
-    usage,
-    email,
-    location,
-    description,
-    seller_contact,
-    seller_name,
-  } = product || {};
+  // Dynamic data from API
+  const { title, image, price_min, price_max, description, _id } =
+    product || {};
+
+  // Hardcoded data
+  const category = "Electronics";
+  const condition = "Excellent";
+  const created_at = "2024-11-01T10:30:00Z";
+  const usage = "6 months";
+  const seller_image = "https://i.pravatar.cc/150?img=12";
+  const seller_name = "Ahmed Hassan";
+  const email = "ahmed.hassan@example.com";
+  const location = "Dhaka, Bangladesh";
+  const seller_contact = "+880 1712-345678";
 
   const bidModalRef = useRef(null);
   const { user } = useContext(AuthContext);
@@ -50,7 +48,6 @@ const ProductDetails = () => {
     const contactInfo = form.contactInfo.value.trim();
     const inputPrice = form.inputPrice.value.trim();
 
-    // === FULL VALIDATION ===
     if (!inputPrice) {
       toast.error("Please enter your offered price!");
       return;
@@ -103,7 +100,6 @@ const ProductDetails = () => {
 
   return (
     <>
-      {/* Toast Container - MUST be in the component tree */}
       <ToastContainer
         position="top-right"
         autoClose={3000}
@@ -116,7 +112,7 @@ const ProductDetails = () => {
       <div className="py-8 px-4 sm:px-6 lg:px-8">
         <Container>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 p-6 md:p-8">
-            {/* Left Column - Product Image */}
+            {/* Left Column - Product Image (DYNAMIC) */}
             <div className="space-y-4">
               <div className="aspect-square rounded-xl overflow-hidden bg-gray-100 border border-gray-200">
                 <img
@@ -125,12 +121,15 @@ const ProductDetails = () => {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div className="flex justify-center">{description}</div>
+              <div className="flex justify-center text-gray-600">
+                {description}
+              </div>
             </div>
 
             {/* Right Column - Product Details */}
             <div className="space-y-6">
               <div>
+                {/* DYNAMIC TITLE */}
                 <h1 className="text-3xl font-bold text-gray-900 mb-2">
                   {title}
                 </h1>
@@ -141,9 +140,16 @@ const ProductDetails = () => {
                   <span className="px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm font-medium">
                     {condition}
                   </span>
+
+                  <Link
+                    to={`/update-products/${_id}`}
+                    className="px-3 py-1 rounded-full text-sm font-medium cursor-pointer bg-green-400 text-white">
+                    Update data
+                  </Link>
                 </div>
               </div>
 
+              {/* DYNAMIC PRICE */}
               <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-5 border border-blue-100">
                 <p className="text-sm text-gray-600 mb-1">Price starts from</p>
                 <div className="flex items-baseline">
@@ -223,6 +229,7 @@ const ProductDetails = () => {
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">
                   Product Description
                 </h3>
+                {/* DYNAMIC DESCRIPTION */}
                 <p className="text-gray-700 bg-gray-50 p-4 rounded-lg border border-gray-200">
                   {description}
                 </p>
@@ -245,7 +252,6 @@ const ProductDetails = () => {
             Give Seller Your Offered Price
           </h3>
 
-          {/* Close button */}
           <form method="dialog">
             <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 hover:bg-red-500 hover:text-white">
               ✕

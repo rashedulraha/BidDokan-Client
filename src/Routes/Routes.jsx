@@ -13,6 +13,7 @@ import ForgotPassword from "../Pages/Forgot/ForgotPassword";
 import ProfilePage from "../Pages/ProfilePage/ProfilePage";
 import PrivetRoute from "../PrivetRoute/PrivetRoute";
 import ProductsDetails from "../Pages/ProductDetails/ProductsDetails";
+import UpdateProducts from "../Pages/UpdateProducts/UpdateProducts";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +43,14 @@ const router = createBrowserRouter([
         element: (
           <PrivetRoute>
             <CreateProducts />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "update-products/:_id",
+        element: (
+          <PrivetRoute>
+            <UpdateProducts />
           </PrivetRoute>
         ),
       },

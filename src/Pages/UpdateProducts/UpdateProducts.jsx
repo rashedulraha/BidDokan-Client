@@ -1,45 +1,60 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { FaArrowLeftLong } from "react-icons/fa6";
+import React from "react";
+// import useSingleProduct from "../../Hooks/useSingleProduct";
+import { Link, useParams } from "react-router";
+import useSingleProduct from "../../Hooks/useSingleProduct";
 import Container from "../../Components/Container";
+import { FaArrowLeftLong } from "react-icons/fa6";
 
-const CreateProducts = () => {
-  const [condition, setCondition] = useState("new");
+const UpdateProducts = () => {
+  const { _id } = useParams();
 
-  const handleSubmit = (e) => {
+  const { product } = useSingleProduct(`http://localhost:3000/products/${_id}`);
+  console.log(product);
+
+  const {
+    price_max,
+    min_price,
+    title,
+    condition,
+    category,
+    created_at,
+    description,
+    image,
+    location,
+    price_min,
+    seller_contact,
+    seller_image,
+    seller_name,
+    status,
+    usage,
+  } = product || {};
+
+  const handleUpdateProducts = (e) => {
     e.preventDefault();
-
-    // const min_price = e.target.min_price.value;
-    // const max_price = e.target.max_price.value;
-    // const userContact = e.target.contact.value;
-    // const number = e.target.number.value;
-
-    //!  this content insertOne on data base
-
-    const title = e.target.title.value;
+    const name = e.target.title.value;
     const max_price = e.target.max_price.value;
+    const image = e.target.image.value;
 
-    const createProducts = {
-      title,
+    const updateProducts = {
+      name,
       max_price,
+      image,
     };
 
-    fetch(`http://localhost:3000/create-products`, {
-      method: "post",
+    fetch(`http://localhost:3000/update-products/${_id}`, {
+      method: "PUT",
       headers: {
         "content-type": "application/json",
       },
-      body: JSON.stringify(createProducts),
+      body: JSON.stringify(updateProducts),
     })
-      .then((result) => {
-        console.log(result);
+      .then((res) => {
+        console.log(res);
       })
       .then(() => {
-        // console.log(error.massage);
+        // console.log(error.message);
       });
   };
-
-  //! actual return
 
   return (
     <Container>
@@ -54,7 +69,7 @@ const CreateProducts = () => {
           </Link>
 
           <h1 className="text-3xl md:text-4xl font-bold text-primary">
-            Create A Product
+            Update A Product
           </h1>
 
           <div className="w-20 md:w-auto" />
@@ -62,7 +77,7 @@ const CreateProducts = () => {
 
         {/* Form Card */}
         <div className="w-full max-w-4xl bg-white rounded-xl shadow-lg p-6 md:p-8 border">
-          <form onSubmit={handleSubmit} className="space-y-7">
+          <form className="space-y-7" onSubmit={handleUpdateProducts}>
             {/* Title + Category */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
@@ -72,6 +87,7 @@ const CreateProducts = () => {
                 <input
                   type="text"
                   name="title"
+                  defaultValue={title}
                   placeholder="Enter your product title"
                   className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 outline-none "
                 />
@@ -101,6 +117,7 @@ const CreateProducts = () => {
                 <input
                   type="number"
                   name="min_price"
+                  defaultValue={min_price}
                   step="0.01"
                   placeholder="Enter your minimum price"
                   className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all duration-200"
@@ -114,6 +131,7 @@ const CreateProducts = () => {
                 <input
                   type="number"
                   name="max_price"
+                  defaultValue={price_max}
                   step="0.01"
                   placeholder="Enter your maximum price"
                   className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all duration-200"
@@ -132,9 +150,8 @@ const CreateProducts = () => {
                     <input
                       type="radio"
                       name="condition"
+                      defaultValue={condition}
                       value="new"
-                      checked={condition === "new"}
-                      onChange={(e) => setCondition(e.target.value)}
                       className="w-5 h-5 text-purple-600 focus:ring-purple-500 border-gray-300"
                     />
                     <span className="ml-2 text-gray-700 font-medium">
@@ -145,9 +162,8 @@ const CreateProducts = () => {
                     <input
                       type="radio"
                       name="condition"
+                      defaultValue={condition}
                       value="used"
-                      checked={condition === "used"}
-                      onChange={(e) => setCondition(e.target.value)}
                       className="w-5 h-5 text-purple-600 focus:ring-purple-500 border-gray-300"
                     />
                     <span className="ml-2 text-gray-700 font-medium">Used</span>
@@ -175,6 +191,7 @@ const CreateProducts = () => {
               <input
                 type="url"
                 placeholder="https://..."
+                defaultValue={image}
                 className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all duration-200"
               />
             </div>
@@ -244,7 +261,7 @@ const CreateProducts = () => {
             {/* Submit Button */}
             <div className="pt-6 flex justify-center">
               <button type="submit" className="btn btn-primary w-fit px-6  ">
-                Create A Product
+                Update A Product
               </button>
             </div>
           </form>
@@ -254,4 +271,4 @@ const CreateProducts = () => {
   );
 };
 
-export default CreateProducts;
+export default UpdateProducts;
