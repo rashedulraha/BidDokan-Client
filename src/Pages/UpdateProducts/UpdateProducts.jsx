@@ -11,18 +11,22 @@ const UpdateProducts = () => {
   const { product } = useSingleProduct(`http://localhost:3000/products/${_id}`);
   console.log(product);
 
-  const {} = product || {};
+  const { description, image, price_max, price_min, title } = product || {};
 
   const handleUpdateProducts = (e) => {
     e.preventDefault();
-    const name = e.target.title.value;
-    const max_price = e.target.max_price.value;
+    const description = e.target.description.value;
+    const title = e.target.title.value;
+    const price_max = e.target.price_max.value;
+    const price_min = e.target.price_max.value;
     const image = e.target.image.value;
 
     const updateProducts = {
-      name,
-      max_price,
+      description,
       image,
+      price_max,
+      price_min,
+      title,
     };
 
     fetch(`http://localhost:3000/update-products/${_id}`, {
@@ -63,6 +67,7 @@ const UpdateProducts = () => {
                 <input
                   type="text"
                   name="title"
+                  defaultValue={title}
                   placeholder="Enter product title"
                   className="input input-bordered w-full focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 />
@@ -76,6 +81,7 @@ const UpdateProducts = () => {
                 <input
                   type="url"
                   name="image"
+                  defaultValue={image}
                   placeholder="https://example.com/image.jpg"
                   className="input input-bordered w-full focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 />
@@ -93,6 +99,7 @@ const UpdateProducts = () => {
                   <input
                     type="number"
                     name="price_min"
+                    defaultValue={price_min}
                     placeholder="100"
                     min="1"
                     step="0.01"
@@ -107,6 +114,7 @@ const UpdateProducts = () => {
                   <input
                     type="number"
                     name="price_max"
+                    defaultValue={price_max}
                     placeholder="500"
                     min="1"
                     step="0.01"
@@ -122,6 +130,7 @@ const UpdateProducts = () => {
                 </label>
                 <textarea
                   name="description"
+                  defaultValue={description}
                   placeholder="Enter detailed product description..."
                   rows="5"
                   className="textarea textarea-bordered w-full focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none"></textarea>
