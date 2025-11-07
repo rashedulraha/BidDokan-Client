@@ -14,11 +14,13 @@ import ProfilePage from "../Pages/ProfilePage/ProfilePage";
 import PrivetRoute from "../PrivetRoute/PrivetRoute";
 import ProductsDetails from "../Pages/ProductDetails/ProductsDetails";
 import UpdateProducts from "../Pages/UpdateProducts/UpdateProducts";
+import ErrorPage from "../Pages/Err/ErrorPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     Component: Layouts,
+    errorElement: <ErrorPage />,
     children: [
       { path: "/", Component: Home },
       {
