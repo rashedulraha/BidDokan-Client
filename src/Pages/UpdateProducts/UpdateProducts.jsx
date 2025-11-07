@@ -3,6 +3,7 @@ import React from "react";
 import { useParams } from "react-router";
 import useSingleProduct from "../../Hooks/useSingleProduct";
 import Container from "../../Components/Container";
+import { toast } from "react-toastify";
 
 const UpdateProducts = () => {
   const { _id } = useParams();
@@ -14,10 +15,13 @@ const UpdateProducts = () => {
 
   const handleUpdateProducts = (e) => {
     e.preventDefault();
+
+    toast.info("Updating your product...");
+
     const description = e.target.description.value;
     const title = e.target.title.value;
+    const price_min = e.target.price_min.value;
     const price_max = e.target.price_max.value;
-    const price_min = e.target.price_max.value;
     const image = e.target.image.value;
 
     const updateProducts = {
@@ -35,11 +39,12 @@ const UpdateProducts = () => {
       },
       body: JSON.stringify(updateProducts),
     })
-      .then((res) => {
-        console.log(res);
-      })
       .then(() => {
+        toast.info("your product is updated");
+      })
+      .catch((error) => {
         // console.log(error.message);
+        toast.error(error?.message);
       });
   };
 

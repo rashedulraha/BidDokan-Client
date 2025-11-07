@@ -9,6 +9,7 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
+  updateProfile,
 } from "firebase/auth";
 import auth from "../../FireBase/Firebase";
 
@@ -64,6 +65,19 @@ const AuthProvider = ({ children }) => {
     return sendPasswordResetEmail(auth, email);
   };
 
+  //! update user
+  const updateUser = async (displayName, photoURL) => {
+    const updateUserData = {
+      displayName,
+      photoURL,
+    };
+
+    await updateProfile(auth.currentUser, updateUserData);
+
+    const updateUser = auth.currentUser;
+    setUser({ ...updateUser });
+  };
+
   //! Observer and get user data
   useEffect(() => {
     setLoading(true);
@@ -85,6 +99,7 @@ const AuthProvider = ({ children }) => {
     Signout,
     signInWithGoogle,
     ResetPassword,
+    updateUser,
   };
   return <AuthContext value={authInfo}>{children}</AuthContext>;
 };
