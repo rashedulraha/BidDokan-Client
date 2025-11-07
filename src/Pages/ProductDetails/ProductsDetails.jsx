@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import Container from "../../Components/Container";
 import { FaLocationDot } from "react-icons/fa6";
 import { MdOutlineEmail } from "react-icons/md";
@@ -7,21 +7,40 @@ import { IoPersonSharp } from "react-icons/io5";
 import { IoMdCall } from "react-icons/io";
 import AuthContext from "../../Context/AuthContext/AuthContext";
 import { useNavigate, useParams } from "react-router-dom";
-import useSingleProduct from "../../Hooks/useSingleProduct";
+// import useSingleProduct from "../../Hooks/useSingleProduct";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const ProductDetails = () => {
-  const { id } = useParams();
-  const navigate = useNavigate();
-  const { product } = useSingleProduct(`http://localhost:3000/products/${id}`);
-  const { title, image, price_min, price_max, description, _id } =
-    product || {};
-
+  const [product, setProduct] = useState({});
   const bidModalRef = useRef(null);
   const { user } = useContext(AuthContext);
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  // const { product } = useSingleProduct(`http://localhost:3000/products/${id}`);
+
+  useEffect(() => {
+    if (!user?.accessToken) {
+      return;
+    }
+    fetch(`http://localhost:3000/products/${id}`, {
+      headers: {
+        authorization: `Bearer ${user?.accessToken}`,
+      },
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        setProduct(data);
+      });
+  }, [id, user]);
+
+  const { title, image, price_min, price_max, description, _id } =
+    product || {};
 
   const handleBidModalOpen = () => {
     bidModalRef.current.showModal();
