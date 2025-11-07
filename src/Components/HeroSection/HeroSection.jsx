@@ -2,6 +2,7 @@ import React from "react";
 import Container from "../../Components/Container";
 import { IoSearchOutline } from "react-icons/io5";
 import { Link } from "react-router";
+import SearchSection from "../SearchSection/SearchSection";
 
 const HeroSection = () => {
   return (
@@ -21,20 +22,6 @@ const HeroSection = () => {
               SmartDeals helps you sell, resell, and shop from trusted local
               sellers — all in one place!
             </p>
-
-            <div className="mt-6 max-w-xl mx-auto">
-              <div className="flex shadow-lg rounded-full overflow-hidden border border-base-300 bg-base-100">
-                <input
-                  type="text"
-                  placeholder="Search for Products, Categories..."
-                  className="input input-ghost w-full px-5 py-3 focus:outline-none focus:bg-transparent"
-                />
-                <button className="btn btn-primary rounded-l-none rounded-r-full px-5">
-                  <IoSearchOutline size={20} />
-                </button>
-              </div>
-            </div>
-
             <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
               <Link to={"/all-products"} className="btn btn-primary px-6">
                 Watch All Products

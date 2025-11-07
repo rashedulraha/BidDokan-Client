@@ -37,7 +37,7 @@ const SearchSection = ({ onSearch }) => {
     <div className="w-full max-w-4xl mx-auto py-8 px-4">
       <div className="relative">
         {/* Search Container */}
-        <div className="flex flex-col  md:flex-row items-center justify-between bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+        <div className="flex flex-col md:flex-row items-center justify-between bg-white rounded-full shadow-lg border border-gray-200 overflow-hidden">
           {/* Search Icon */}
           <div className="pl-4 pr-2 py-3">
             <CiSearch />
@@ -49,12 +49,12 @@ const SearchSection = ({ onSearch }) => {
             value={searchTerm}
             onChange={handleInputChange}
             placeholder="Search products..."
-            className="flex-1 py-4 px-2 text-gray-700 bg-transparent border-none outline-none placeholder-gray-400 text-base"
+            className="input input-ghost w-full focus:outline-none focus:bg-transparent"
           />
 
           {/* Search Button */}
           <button
-            className="px-6 py-4 bg-blue-600 hover:bg-blue-700 text-white font-medium transition-colors duration-200"
+            className="btn btn-primary rounded-l-none rounded-r-full px-5"
             onClick={() => handleSearch(searchTerm)}>
             Search
           </button>
