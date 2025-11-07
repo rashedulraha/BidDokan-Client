@@ -6,14 +6,16 @@ import { IoInformationCircleSharp } from "react-icons/io5";
 import { IoPersonSharp } from "react-icons/io5";
 import { IoMdCall } from "react-icons/io";
 import AuthContext from "../../Context/AuthContext/AuthContext";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useSingleProduct from "../../Hooks/useSingleProduct";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const ProductDetails = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const { product } = useSingleProduct(`http://localhost:3000/products/${id}`);
   const { title, image, price_min, price_max, description, _id } =
     product || {};
@@ -25,8 +27,46 @@ const ProductDetails = () => {
     bidModalRef.current.showModal();
   };
 
-  const handleDeleteProducts = () => {
-    console.log("products delete", _id);
+  const handleDeleteProducts = (_id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3b82f6",
+      cancelButtonColor: "#ef4444",
+      confirmButtonText: "Yes, delete it!",
+    })
+      .then((result) => {
+        if (result.isConfirmed) {
+          fetch(`/delete-products/${_id}`, {
+            method: "DELETE",
+            headers: {
+              "content-type": "application/json",
+            },
+          })
+            .then((res) => {
+              if (!res.ok) throw new Error("Failed to delete product");
+              return res.json();
+            })
+            .then(() => {
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your file has been deleted.",
+                icon: "success",
+                confirmButtonColor: "#3b82f6",
+              }).then(() => {
+                navigate("/all-products");
+              });
+            })
+            .catch((error) => {
+              toast.error(error.message);
+            });
+        }
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
   };
 
   const handleBidSubmit = (e) => {
@@ -100,7 +140,7 @@ const ProductDetails = () => {
                   <img
                     src={image}
                     alt={title}
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full object-container hover:scale-105 transition-transform duration-300 "
                   />
                 </div>
               </div>
@@ -225,7 +265,7 @@ const ProductDetails = () => {
                       Update data
                     </Link>
                     <button
-                      onClick={handleDeleteProducts}
+                      onClick={() => handleDeleteProducts(_id)}
                       className="flex-1 py-3 px-4 bg-red-50 hover:bg-red-100 text-red-800 rounded-lg text-center font-medium border border-red-200 transition-colors">
                       Delete Products
                     </button>
