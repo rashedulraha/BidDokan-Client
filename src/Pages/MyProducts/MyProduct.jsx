@@ -12,7 +12,11 @@ const MyProduct = () => {
     if (!user) {
       return;
     }
-    fetch(`http://localhost:3000/my-products?email=${user.email}`)
+    fetch(`http://localhost:3000/my-products?email=${user.email}`, {
+      headers: {
+        authorization: `Bearer ${user.accessToken}`,
+      },
+    })
       .then((res) => res.json())
       .then((result) => {
         setMyProducts(result);

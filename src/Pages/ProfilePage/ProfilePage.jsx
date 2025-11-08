@@ -2,11 +2,13 @@ import React, { useContext, useState } from "react";
 import { FaEdit, FaSignOutAlt } from "react-icons/fa";
 import AuthContext from "../../Context/AuthContext/AuthContext";
 import { IoClose } from "react-icons/io5";
+import { MdDelete } from "react-icons/md";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
 
 const ProfilePage = () => {
-  const { user, Signout, updateUser } = useContext(AuthContext);
+  const { user, Signout, updateUser, deleteUserAccount } =
+    useContext(AuthContext);
   // console.log(user);
 
   const [toggleForm, setToggleForm] = useState(false);
@@ -45,6 +47,20 @@ const ProfilePage = () => {
       })
       .then((error) => {
         toast.error(error?.massage);
+      });
+  };
+
+  const handleDeleteUser = () => {
+    console.log("delete");
+
+    deleteUserAccount()
+      .then(() => {
+        Signout();
+        navigate("/account/register");
+        toast.success("Successfully delete account");
+      })
+      .error((error) => {
+        toast.error(error.massage);
       });
   };
 
@@ -139,6 +155,12 @@ const ProfilePage = () => {
                 className="flex items-center px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors cursor-pointer">
                 <FaSignOutAlt className="mr-2" />
                 Logout
+              </button>
+              <button
+                onClick={handleDeleteUser}
+                className="flex items-center px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors cursor-pointer">
+                <MdDelete className="mr-2" />
+                Delete Account
               </button>
             </div>
           </div>
