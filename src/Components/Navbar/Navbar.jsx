@@ -39,12 +39,7 @@ const Navbar = () => {
           <FaBoxOpen className="text-primary" />
           All Products
         </NavLink>
-        <NavLink
-          to={"/my-bids"}
-          className="flex items-center gap-2 hover:text-primary transition-all">
-          <FaGavel className="text-primary" />
-          My Bids
-        </NavLink>
+
         {user && (
           <>
             <NavLink

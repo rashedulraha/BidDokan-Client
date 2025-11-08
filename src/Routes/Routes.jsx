@@ -2,7 +2,6 @@ import { createBrowserRouter } from "react-router";
 import Layouts from "../Layouts/MainLayout/Layouts";
 import AllProducts from "../Pages/AllProducts/AllProducts";
 import MyProduct from "../Pages/MyProducts/MyProduct";
-import MyBids from "../Pages/MyBids/MyBids";
 import CreateProducts from "../Pages/CreateProducts/CreateProducts";
 import Home from "../Pages/Home/Home";
 
@@ -33,14 +32,6 @@ const router = createBrowserRouter([
         ),
       },
 
-      {
-        path: "my-bids",
-        element: (
-          <PrivetRoute>
-            <MyBids />
-          </PrivetRoute>
-        ),
-      },
       {
         path: "create-products",
         element: (
