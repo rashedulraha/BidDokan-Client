@@ -7,6 +7,8 @@ import {
   FaGavel,
   FaPlusCircle,
   FaBoxes,
+  FaCog,
+  FaUser,
 } from "react-icons/fa";
 
 import Container from "../Container";
@@ -51,20 +53,34 @@ const Navbar = () => {
               <FaPlusCircle className="text-primary" />
               Create Product
             </NavLink>
-            <NavLink
-              to={"/my-products"}
-              className="flex items-center gap-2 hover:text-primary transition-all">
-              <FaBoxes className="text-primary" />
-              My Products
-            </NavLink>
           </>
         )}
       </div>
     </>
   );
+
   const UserAction = (
     <>
-      <div></div>
+      <div className="flex flex-col  items-center  gap-4 font-medium text-gray-700 text-base">
+        <NavLink
+          to="/my-products"
+          className="flex items-center gap-2 hover:text-primary transition-all">
+          <FaBoxes className="text-primary" />
+          My Products
+        </NavLink>
+        <NavLink
+          to="/profile-page"
+          className="flex items-start gap-2 hover:text-primary transition-all">
+          <FaUser className="text-primary" />
+          My Profile
+        </NavLink>
+        <NavLink
+          to="/settings"
+          className="flex items-start gap-2 hover:text-primary transition-all">
+          <FaCog className="text-primary" />
+          Settings
+        </NavLink>
+      </div>
     </>
   );
 
@@ -110,7 +126,6 @@ const Navbar = () => {
           </div>
 
           <div className="navbar-end gap-2 ">
-            {/* {UserAction}{" "} */}
             <div className="dropdown dropdown-end">
               <div tabIndex={0} role="button">
                 {user ? (
@@ -129,7 +144,9 @@ const Navbar = () => {
               </div>
               <ul
                 tabIndex={0}
-                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[9999] mt-3 w-56 p-4 shadow-xl border border-base-300"></ul>
+                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[9999] mt-3 w-56 p-4 shadow-xl border border-base-300">
+                {UserAction}
+              </ul>
             </div>
           </div>
         </div>

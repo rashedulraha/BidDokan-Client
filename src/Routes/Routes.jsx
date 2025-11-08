@@ -15,6 +15,7 @@ import PrivetRoute from "../PrivetRoute/PrivetRoute";
 import ProductsDetails from "../Pages/ProductDetails/ProductsDetails";
 import UpdateProducts from "../Pages/UpdateProducts/UpdateProducts";
 import ErrorPage from "../Pages/Err/ErrorPage";
+import Settings from "../Pages/Settings/Settings";
 
 const router = createBrowserRouter([
   {
@@ -53,6 +54,22 @@ const router = createBrowserRouter([
         element: (
           <PrivetRoute>
             <UpdateProducts />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/profile-page",
+        element: (
+          <PrivetRoute>
+            <ProfilePage />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/settings",
+        element: (
+          <PrivetRoute>
+            <Settings />
           </PrivetRoute>
         ),
       },

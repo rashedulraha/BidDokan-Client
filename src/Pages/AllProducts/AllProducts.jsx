@@ -3,6 +3,7 @@ import Container from "../../Components/Container";
 import useSingleProduct from "../../Hooks/useSingleProduct";
 import ProductsCard from "../../Components/ProductsCard/ProductsCard";
 import SearchSection from "../../Components/SearchSection/SearchSection";
+import CallToAction from "../../Components/CallToAction/CallToAction";
 
 const AllProducts = () => {
   const fetchingProducts = useSingleProduct(`http://localhost:3000/products`);
@@ -48,6 +49,8 @@ const AllProducts = () => {
           </div>
         )}
       </Container>
+      {/* call to action section */}
+      <CallToAction />
     </div>
   );
 };

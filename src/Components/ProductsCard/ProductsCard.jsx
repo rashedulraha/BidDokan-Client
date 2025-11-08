@@ -10,7 +10,7 @@ const ProductsCard = ({ Product }) => {
         <img
           src={image}
           alt="Product"
-          className="rounded-xl object-cover w-full h-48"
+          className="rounded-xl object-contain w-full h-48"
         />
       </figure>
       <div className="card-body items-center  p-4">

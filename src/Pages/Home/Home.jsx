@@ -3,6 +3,7 @@ import HeroSection from "../../Components/HeroSection/HeroSection";
 import LatestProducts from "../../Components/LatestProducts/LatestProducts";
 import AuthContext from "../../Context/AuthContext/AuthContext";
 import { BarLoader } from "react-spinners";
+import CallToAction from "../../Components/CallToAction/CallToAction";
 
 const latestProductsPromise = fetch(
   "http://localhost:3000/latest-products"
@@ -31,6 +32,9 @@ const Home = () => {
           <LatestProducts latestProductsPromise={latestProductsPromise} />
         </Suspense>
       </div>
+
+      {/* call to action section  */}
+      <CallToAction />
     </div>
   );
 };
