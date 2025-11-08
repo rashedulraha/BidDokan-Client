@@ -1,6 +1,14 @@
 import React, { useContext } from "react";
 import { Link, NavLink } from "react-router";
 import { TbLayoutNavbarExpand } from "react-icons/tb";
+import {
+  FaHome,
+  FaBoxOpen,
+  FaGavel,
+  FaPlusCircle,
+  FaBoxes,
+} from "react-icons/fa";
+
 import Container from "../Container";
 import "../../index.css";
 import AuthContext from "../../Context/AuthContext/AuthContext";
@@ -17,44 +25,46 @@ const Navbar = () => {
   const MenuLink = (
     <>
       <div className="flex flex-col lg:flex-row items-center gap-4 md:gap-6 lg:gap-8 font-medium text-gray-700 text-base md:text-sm lg:text-base">
-        <NavLink to={"/"}>Home</NavLink>
-        <NavLink to={"/all-products"}>AllProducts</NavLink>
-        <NavLink to={"/my-bids"}>My Bids</NavLink>
-
+        <NavLink
+          to={"/"}
+          className="flex items-center gap-2 hover:text-primary transition-all">
+          <FaHome className="text-primary" />
+          Home
+        </NavLink>
+        <NavLink
+          to={"/all-products"}
+          className="flex items-center gap-2 hover:text-primary transition-all">
+          <FaBoxOpen className="text-primary" />
+          All Products
+        </NavLink>
+        <NavLink
+          to={"/my-bids"}
+          className="flex items-center gap-2 hover:text-primary transition-all">
+          <FaGavel className="text-primary" />
+          My Bids
+        </NavLink>
         {user && (
           <>
-            <NavLink to={"/create-products"}>Crate product</NavLink>
-            <NavLink to={"/my-products"}>My Products</NavLink>
+            <NavLink
+              to={"/create-products"}
+              className="flex items-center gap-2 hover:text-primary transition-all">
+              <FaPlusCircle className="text-primary" />
+              Create Product
+            </NavLink>
+            <NavLink
+              to={"/my-products"}
+              className="flex items-center gap-2 hover:text-primary transition-all">
+              <FaBoxes className="text-primary" />
+              My Products
+            </NavLink>
           </>
         )}
       </div>
     </>
   );
-
-  const UserAction = user ? (
+  const UserAction = (
     <>
-      <Link
-        to="/profile-page"
-        className="rounded-full border hover:bg-primary hover:text-white transition-all">
-        <img
-          src={photoURL}
-          alt="Profile"
-          className="w-12 h-12 rounded-full border-4 border-white"
-        />
-      </Link>
-    </>
-  ) : (
-    <>
-      <Link
-        to="/account/login"
-        className="btn btn-outline btn-primary btn-sm md:btn-md rounded-full px-6 border-2 hover:bg-primary hover:text-white transition-all">
-        Login
-      </Link>
-      <Link
-        to="/account/register"
-        className="btn btn-primary btn-sm md:btn-md rounded-full hidden md:flex ">
-        Register
-      </Link>
+      <div></div>
     </>
   );
 
@@ -99,7 +109,29 @@ const Navbar = () => {
             </ul>
           </div>
 
-          <div className="navbar-end gap-2 ">{UserAction}</div>
+          <div className="navbar-end gap-2 ">
+            {/* {UserAction}{" "} */}
+            <div className="dropdown dropdown-end">
+              <div tabIndex={0} role="button">
+                {user ? (
+                  <img
+                    className="rounded-full border hover:bg-primary hover:text-white transition-all w-12 h-12 cursor-pointer"
+                    src={photoURL}
+                    alt="user Image"
+                  />
+                ) : (
+                  <Link
+                    to="/account/login"
+                    className="btn btn-outline btn-primary btn-sm md:btn-md rounded-full px-6 border-2 hover:bg-primary hover:text-white transition-all">
+                    Login
+                  </Link>
+                )}
+              </div>
+              <ul
+                tabIndex={0}
+                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[9999] mt-3 w-56 p-4 shadow-xl border border-base-300"></ul>
+            </div>
+          </div>
         </div>
       </Container>
     </div>
